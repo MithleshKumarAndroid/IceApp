@@ -1,6 +1,6 @@
-import React from 'react';
-import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
-import {scale} from 'react-native-size-matters';
+import React from "react";
+import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
+import { scale } from "react-native-size-matters";
 
 export interface Props {
   Label?: string;
@@ -9,23 +9,22 @@ export interface Props {
 }
 
 const Button = (props: Props) => {
-  const {Label, Style, PressOn} = props;
-
+  const { Label, Style, PressOn } = props;
   return (
-    <TouchableOpacity style={[styles.main, {...Style}]} onPress={PressOn}>
-      <Text style={{color: '#FFF', fontSize: scale(13)}}>{Label}</Text>
+    <TouchableOpacity style={[styles.main, { ...Style }]} onPress={PressOn}>
+      <Text style={{ color: "#FFF", fontSize: scale(13) }}>{Label}</Text>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   main: {
-    width: '100%',
+    width: "100%",
     height: 45,
     borderRadius: scale(5),
-    backgroundColor: '#02A4AE',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "#02A4AE",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

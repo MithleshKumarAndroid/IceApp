@@ -1,14 +1,15 @@
-import React from 'react';
-import {View, Text, Image} from 'react-native';
-import {splash} from './image';
+import React from "react";
+import { View, Text, Image } from "react-native";
+import { splash } from "./image";
+import FastImage from "react-native-fast-image";
 
 const Splash = () => {
   return (
-    <View style={{width: '100%', height: '100%', backgroundColor: 'blue'}}>
-      <Image
-        style={{width: '100%', height: '100%'}}
+    <View style={{ width: "100%", height: "100%" }}>
+      <FastImage
+        style={{ width: "100%", height: "100%" }}
         source={splash}
-        resizeMode={'cover'}
+        resizeMode={"cover"}
       />
     </View>
   );

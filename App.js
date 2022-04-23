@@ -6,9 +6,11 @@
  * @flow strict-local
  */
 
-import React, {useEffect, useState} from 'react';
-import {SafeAreaView, View, Text} from 'react-native';
-import Splash from './src/Splash';
+import React, { useEffect, useState } from "react";
+import { SafeAreaView, View, Text } from "react-native";
+import Splash from "./src/Splash";
+import AuthStack from "./src/navigator";
+import Login from "./src/beforeLogin/Login/index";
 
 const App = () => {
   const [show, setShow] = useState(true);
@@ -19,7 +21,7 @@ const App = () => {
     }, 1000);
   }, []);
 
-  return <SafeAreaView>{show ? <Splash /> : <Text>mith</Text>}</SafeAreaView>;
+  return <SafeAreaView>{show ? <Splash /> : <AuthStack />}</SafeAreaView>;
 };
 
 export default App;

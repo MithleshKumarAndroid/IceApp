@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "959987877983",
+    "project_id": "iceapp-64aa4",
+    "storage_bucket": "iceapp-64aa4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:959987877983:android:4ce6cf878a4e477e1fb3ea",
+        "android_client_info": {
+          "package_name": "com.ice"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "959987877983-9jtm9jcta7an9mv3uoi72cugidehdv54.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDoD7XwM5uNG8CQ2-Aa4KlVBCNYNuTSwW8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "959987877983-9jtm9jcta7an9mv3uoi72cugidehdv54.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
