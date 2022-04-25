@@ -10,6 +10,8 @@ import * as Storage from "./utily/Storage";
 import Drawer from "./afterLogin/Drawer";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import ForgotPassword from "./beforeLogin/ForgotPass";
+import { scale } from "react-native-size-matters";
+import ProgressBar from "./Component/ProgressBar";
 
 const BeforeLoginStack = createNativeStackNavigator();
 const AfterLoginStack = createNativeStackNavigator();
@@ -17,15 +19,19 @@ const DrawerStack = createDrawerNavigator();
 
 const AfterLogin = () => {
   return (
-    // <NavigationContainer>
     <DrawerStack.Navigator
-      drawerContent={(props) => <Drawer />}
-      screenOptions={{ headerShown: false, drawerType: "front" }}
+      drawerContent={(props) => <Drawer {...props} />}
+      screenOptions={{
+        headerShown: false,
+        drawerType: "front",
+        drawerStyle: {
+          backgroundColor: "#10A8B2",
+          width: scale(220),
+        },
+      }}
     >
       <DrawerStack.Screen name={"Home"} component={Home} />
     </DrawerStack.Navigator>
-
-    // </NavigationContainer>
   );
 };
 
@@ -51,20 +57,28 @@ const BeforeLogin = () => {
 
 const AuthStack = () => {
   const [userId, setUserId] = useState("");
+  const [showLoader, setShowLoader] = useState(true);
 
   useEffect(() => {
     Storage.getData("UserId").then((value) => {
       if (value != null && value != undefined && value != "") {
         setUserId(value);
+        setShowLoader(false);
+      } else {
+        setShowLoader(false);
       }
     });
   }, []);
 
   return (
     <View style={{ width: "100%", height: "100%" }}>
-      <NavigationContainer>
-        {userId ? <AfterLogin /> : <BeforeLogin />}
-      </NavigationContainer>
+      {showLoader ? (
+        <ProgressBar showLoader={showLoader} />
+      ) : (
+        <NavigationContainer>
+          {userId ? <AfterLogin /> : <BeforeLogin />}
+        </NavigationContainer>
+      )}
     </View>
   );
 };

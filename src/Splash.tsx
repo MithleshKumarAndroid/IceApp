@@ -5,7 +5,7 @@ import FastImage from "react-native-fast-image";
 
 const Splash = () => {
   return (
-    <View style={{ width: "100%", height: "100%" }}>
+    <View style={{ width: "100%", height: "100%", backgroundColor: "red" }}>
       <FastImage
         style={{ width: "100%", height: "100%" }}
         source={splash}

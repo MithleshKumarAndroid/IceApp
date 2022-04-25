@@ -2,11 +2,18 @@ import React from "react";
 import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
 import { scale } from "react-native-size-matters";
 import { menuIcon, searchIcon, cartIcon } from "../image";
+// import {} from "@react-navigation/drawer";
+import { useNavigation } from "@react-navigation/native";
 
 const MenuHeader = () => {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.main}>
-      <TouchableOpacity style={styles.menu_Con}>
+      <TouchableOpacity
+        style={styles.menu_Con}
+        onPress={() => navigation.openDrawer()}
+      >
         <Image style={styles.menu_Img} source={menuIcon} />
       </TouchableOpacity>
       <View style={styles.scond_Child}>

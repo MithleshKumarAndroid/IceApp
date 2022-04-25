@@ -11,17 +11,21 @@ import { SafeAreaView, View, Text } from "react-native";
 import Splash from "./src/Splash";
 import AuthStack from "./src/navigator";
 import Login from "./src/beforeLogin/Login/index";
+import SplashScreen from "react-native-splash-screen";
 
 const App = () => {
   const [show, setShow] = useState(true);
 
   useEffect(() => {
     setTimeout(() => {
-      setShow(false);
-    }, 1000);
+      SplashScreen.hide();
+    }, 100);
   }, []);
 
-  return <SafeAreaView>{show ? <Splash /> : <AuthStack />}</SafeAreaView>;
+  return (
+    <SafeAreaView>
+      <AuthStack />
+    </SafeAreaView>
+  );
 };
-
 export default App;
