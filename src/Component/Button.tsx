@@ -1,10 +1,16 @@
 import React from "react";
-import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  ViewStyle,
+} from "react-native";
 import { scale } from "react-native-size-matters";
 
 export interface Props {
   Label?: string;
-  Style?: any;
+  Style?: ViewStyle;
   PressOn?(): void;
 }
 

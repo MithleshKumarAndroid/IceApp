@@ -12,10 +12,10 @@ import Splash from "./src/Splash";
 import AuthStack from "./src/navigator";
 import Login from "./src/beforeLogin/Login/index";
 import SplashScreen from "react-native-splash-screen";
+import Navig from "./src/NavigationService";
 
 const App = () => {
   const [show, setShow] = useState(true);
-
   useEffect(() => {
     setTimeout(() => {
       SplashScreen.hide();

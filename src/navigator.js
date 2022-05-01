@@ -12,9 +12,15 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import ForgotPassword from "./beforeLogin/ForgotPass";
 import { scale } from "react-native-size-matters";
 import ProgressBar from "./Component/ProgressBar";
+import Profile from "./afterLogin/Profile";
+import Offer from "./afterLogin/Offer";
+import Order from "./afterLogin/Order";
+import Faq from "./afterLogin/Faq";
+
+import { navigationRef } from "./NavigationService";
 
 const BeforeLoginStack = createNativeStackNavigator();
-const AfterLoginStack = createNativeStackNavigator();
+const WithoutDrawerStack = createNativeStackNavigator();
 const DrawerStack = createDrawerNavigator();
 
 const AfterLogin = () => {
@@ -31,6 +37,11 @@ const AfterLogin = () => {
       }}
     >
       <DrawerStack.Screen name={"Home"} component={Home} />
+      <DrawerStack.Screen name={"Profile"} component={Profile} />
+      <DrawerStack.Screen name={"Offer"} component={Offer} />
+      <DrawerStack.Screen name={"Order"} component={Order} />
+      <DrawerStack.Screen name={"Faq"} component={Faq} />
+      <DrawerStack.Screen name={"BeforeLogin"} component={BeforeLogin} />
     </DrawerStack.Navigator>
   );
 };
@@ -40,6 +51,14 @@ const AfterLogin = () => {
         <AfterLoginStack.Screen name={"Home"} component={Home} />
       </AfterLoginStack.Navigator> */
 }
+
+const WithoutDrawer = () => {
+  return (
+    <WithoutDrawerStack.Navigator screenOptions={{ headerShown: false }}>
+      <WithoutDrawerStack.Screen name={"Profile"} component={Profile} />
+    </WithoutDrawerStack.Navigator>
+  );
+};
 
 const BeforeLogin = () => {
   return (
@@ -75,7 +94,7 @@ const AuthStack = () => {
       {showLoader ? (
         <ProgressBar showLoader={showLoader} />
       ) : (
-        <NavigationContainer>
+        <NavigationContainer ref={navigationRef}>
           {userId ? <AfterLogin /> : <BeforeLogin />}
         </NavigationContainer>
       )}

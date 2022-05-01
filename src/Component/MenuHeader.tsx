@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
     height: scale(40),
     flexDirection: "row",
     justifyContent: "space-between",
+    // backgroundColor: "#10A8B2",
   },
   menu_Con: {
     width: "15%",

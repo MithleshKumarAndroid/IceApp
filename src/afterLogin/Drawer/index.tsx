@@ -19,16 +19,30 @@ import {
 import Label from "../../Component/Label";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import * as Storage from "../../utily/Storage";
+import { useNavigation, CommonActions } from "@react-navigation/native";
+import * as NavigationService from "../../NavigationService";
 
 const Drawer = (props: any) => {
+  const navigation = useNavigation();
+
   const clickLogout = () => {
-    Alert.alert("Warning", "Are you sure?. You want to logout", [
+    Alert.alert("", "Thank you for Ordering with R&B Tea.See you soon!", [
       {
         text: "Cancel",
         onPress: () => props.navigation.closeDrawer(),
         style: "cancel",
       },
-      { text: "OK", onPress: () => Storage.storeData("UserId", "") },
+      {
+        text: "OK",
+        onPress: () => {
+          // navigation.reset("Login");
+          navigation.reset({
+            index: 0,
+            routes: [{ name: "BeforeLogin" }],
+          });
+          Storage.storeData("UserId", "");
+        },
+      },
     ]);
   };
 
@@ -36,25 +50,34 @@ const Drawer = (props: any) => {
     <View style={styles.main}>
       <Image style={styles.logo} source={whiteLogo} />
       <View style={styles.sub_Main}>
-        <View style={styles.first_Child}>
+        <TouchableOpacity
+          style={styles.first_Child}
+          onPress={() => navigation.navigate("Profile")}
+        >
           <Image style={styles.image_Con} source={DrawerProfile} />
           <Label Title={"Profile"} Style={styles.title} />
-        </View>
+        </TouchableOpacity>
         <View style={styles.line} />
-        <View style={styles.first_Child}>
+        <TouchableOpacity
+          style={styles.first_Child}
+          onPress={() => navigation.navigate("Order")}
+        >
           <Image style={styles.cart_Image} source={DrawerCart} />
           <Label Title={"Order"} Style={styles.title} />
-        </View>
+        </TouchableOpacity>
         <View style={styles.line} />
-        <View style={styles.first_Child}>
+        <TouchableOpacity
+          style={styles.first_Child}
+          onPress={() => navigation.navigate("Offer")}
+        >
           <Image style={styles.promo_Image} source={DrawerPromo} />
           <Label Title={"Offer and Promo"} Style={styles.title} />
-        </View>
+        </TouchableOpacity>
         <View style={styles.line} />
-        <View style={styles.first_Child}>
+        <TouchableOpacity style={styles.first_Child}>
           <Image style={styles.policy_Image} source={privacyIcon} />
           <Label Title={"Privacy and Policy"} Style={styles.title} />
-        </View>
+        </TouchableOpacity>
         <View style={styles.line} />
         <View style={styles.first_Child}>
           <Image style={styles.security_Image} source={securityIcon} />

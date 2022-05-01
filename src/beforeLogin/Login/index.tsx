@@ -9,6 +9,7 @@ import {
   StyleSheet,
   Alert,
   Image,
+  TextInput,
 } from "react-native";
 import { loginBack, googleIcon, facebookIcon, appleIcon } from "../../image";
 import FastImage from "react-native-fast-image";
@@ -50,7 +51,11 @@ const Login = () => {
       Storage.getData("UserId").then((value) => {
         console.log("-----UserId--->", value);
         if (value != null && value != "" && value != undefined) {
-          navigation.navigate("HomePage");
+          // navigation.navigate("HomePage");
+          navigation.reset({
+            index: 0,
+            routes: [{ name: "HomePage" }],
+          });
         }
       });
     }
@@ -84,83 +89,80 @@ const Login = () => {
 
   return (
     <View style={{ width: "100%", height: "100%" }}>
-      <KeyboardAvoidingView
+      {/* <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={{ flex: 1 }}
+        style={{ flexGrow: 1 }}
       >
-        <ScrollView contentContainerStyle={{ paddingBottom: scale(80) }}>
-          <FastImage
-            style={{ width: "100%", height: scale(230) }}
-            source={loginBack}
-            resizeMode={FastImage.resizeMode.cover}
-          />
-          <View
-            style={{
-              width: "80%",
-              marginTop: scale(20),
-              marginHorizontal: "10%",
-            }}
+        <ScrollView contentContainerStyle={{ paddingBottom: scale(80) }}> */}
+      <FastImage
+        style={{ width: "100%", height: scale(230) }}
+        source={loginBack}
+        resizeMode={FastImage.resizeMode.cover}
+      />
+      <View
+        style={{
+          width: "80%",
+          marginTop: scale(20),
+          marginHorizontal: "10%",
+        }}
+      >
+        <EditText
+          Placeholder={"Please enter email id"}
+          ChangeText={(txt) => setEmail(txt.trim())}
+          ReturnKeyType={"next"}
+          Ref={emailRef}
+          SubmitEditing={() => passwordRef.current?.focus()}
+        />
+        <EditText
+          Ref={passwordRef}
+          Style={{ marginTop: scale(10) }}
+          Placeholder={"Please enter password"}
+          ChangeText={(txt) => setPassword(txt.trim())}
+          ReturnKeyType={"done"}
+          SubmitEditing={() => Keyboard.dismiss()}
+        />
+        <TouchableOpacity
+          style={styles.forgot_Con}
+          onPress={() => navigation.navigate("Forgot")}
+        >
+          <Label Style={styles.forgot_Label} Title={"Forgot Password?"} />
+        </TouchableOpacity>
+        <Button
+          PressOn={() => submit()}
+          Style={{ marginVertical: scale(20) }}
+          Label={"Login"}
+        />
+        <View style={styles.signup_Con}>
+          <View style={styles.signup_F} />
+          <Label Style={styles.signup_Label} Title={"Or Sign up with"} />
+          <View style={styles.signup_F} />
+        </View>
+
+        <View style={styles.bottom_Con}>
+          <TouchableOpacity
+            style={styles.google_Con}
+            onPress={() => callGoogleSignIn()}
           >
-            <EditText
-              Placeholder={"Please enter email id"}
-              ChangeText={(txt) => setEmail(txt.trim())}
-              ReturnKeyType={"next"}
-              Ref={emailRef}
-              SubmitEditing={() => passwordRef.current?.focus()}
-            />
-            <EditText
-              Ref={passwordRef}
-              Style={{ marginTop: scale(10) }}
-              Placeholder={"Please enter password"}
-              ChangeText={(txt) => setPassword(txt.trim())}
-              ReturnKeyType={"done"}
-              SubmitEditing={() => Keyboard.dismiss()}
-            />
-            <TouchableOpacity
-              style={styles.forgot_Con}
-              onPress={() => navigation.navigate("Forgot")}
-            >
-              <Label Style={styles.forgot_Label} Title={"Forgot Password?"} />
-            </TouchableOpacity>
-            <Button
-              PressOn={() => submit()}
-              Style={{ marginVertical: scale(20) }}
-              Label={"Login"}
-            />
-            <View style={styles.signup_Con}>
-              <View style={styles.signup_F} />
-              <Label Style={styles.signup_Label} Title={"Or Sign up with"} />
-              <View style={styles.signup_F} />
-            </View>
+            <Image style={styles.google_Icon} source={googleIcon} />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.facebook_Con}>
+            <Image style={styles.facebook_Icon} source={facebookIcon} />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.apple_Con}>
+            <Image style={styles.apple_Icon} source={appleIcon} />
+          </TouchableOpacity>
+        </View>
 
-            <View style={styles.bottom_Con}>
-              <TouchableOpacity
-                style={styles.google_Con}
-                onPress={() => callGoogleSignIn()}
-              >
-                <Image style={styles.google_Icon} source={googleIcon} />
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.facebook_Con}>
-                <Image style={styles.facebook_Icon} source={facebookIcon} />
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.apple_Con}>
-                <Image style={styles.apple_Icon} source={appleIcon} />
-              </TouchableOpacity>
-            </View>
-
-            <TouchableOpacity
-              style={styles.notReg_Con}
-              onPress={() => navigation.navigate("Signup")}
-            >
-              <Label
-                Style={styles.not_Reg_Label}
-                Title={" Not register yet ?"}
-              />
-              <Label Style={styles.create_Label} Title={"Create account"} />
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
+        <TouchableOpacity
+          style={styles.notReg_Con}
+          onPress={() => navigation.navigate("Signup")}
+        >
+          <Label Style={styles.not_Reg_Label} Title={" Not register yet ?"} />
+          <Label Style={styles.create_Label} Title={"Create account"} />
+        </TouchableOpacity>
+      </View>
+      {/* </ScrollView>
+      </KeyboardAvoidingView> */}
     </View>
   );
 };

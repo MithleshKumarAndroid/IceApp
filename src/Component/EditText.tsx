@@ -1,29 +1,29 @@
-import React, {useRef} from 'react';
-import {View, Text, TextInput} from 'react-native';
-import {scale} from 'react-native-size-matters';
+import React, { useRef } from "react";
+import { View, Text, TextInput, TextStyle } from "react-native";
+import { scale } from "react-native-size-matters";
 
 export interface Props {
   Placeholder?: string;
   ChangeText?(txt: string): void;
-  Style?: any;
+  Style?: TextStyle;
   ReturnKeyType?:
-    | 'done'
-    | 'go'
-    | 'next'
-    | 'search'
-    | 'send'
-    | 'none'
-    | 'previous'
-    | 'default';
+    | "done"
+    | "go"
+    | "next"
+    | "search"
+    | "send"
+    | "none"
+    | "previous"
+    | "default";
   SubmitEditing?(): void;
   Ref?: any;
   KeyboardType?:
-    | 'default'
-    | 'email-address'
-    | 'numeric'
-    | 'phone-pad'
-    | 'number-pad'
-    | 'decimal-pad';
+    | "default"
+    | "email-address"
+    | "numeric"
+    | "phone-pad"
+    | "number-pad"
+    | "decimal-pad";
   Value?: string | undefined;
   MaxLength?: number | undefined;
 }
@@ -45,18 +45,19 @@ const EditText = (props: Props) => {
     <View
       style={[
         {
-          width: '100%',
+          width: "100%",
           height: scale(40),
-          borderColor: 'grey',
+          borderColor: "grey",
           borderWidth: scale(0.5),
           borderRadius: scale(5),
         },
-        {...Style},
-      ]}>
+        { ...Style },
+      ]}
+    >
       <TextInput
         value={Value}
         ref={Ref}
-        style={{width: '90%', marginHorizontal: '5%', height: '100%'}}
+        style={{ width: "90%", marginHorizontal: "5%", height: "100%" }}
         placeholder={Placeholder}
         onChangeText={ChangeText}
         returnKeyType={ReturnKeyType}

@@ -18,11 +18,12 @@ import HomePage from "./HomePage";
 import OurCategory from "../OurCategory";
 import Cart from "../Cart";
 import Profile from "../Profile";
+import Search from "../Search";
 
 const Home = () => {
   return (
     <>
-      <MenuHeader />
+      {/* <MenuHeader /> */}
       <Tab.Navigator
         sceneAnimationEnabled={false}
         barStyle={{ backgroundColor: "#FFF" }}
@@ -79,8 +80,8 @@ const Home = () => {
           }}
         />
         <Tab.Screen
-          name="Profile"
-          component={Profile}
+          name="Search"
+          component={Search}
           options={{
             tabBarLabel: "",
             tabBarIcon: ({ color, focused }) => (
