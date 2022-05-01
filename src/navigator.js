@@ -16,8 +16,9 @@ import Profile from "./afterLogin/Profile";
 import Offer from "./afterLogin/Offer";
 import Order from "./afterLogin/Order";
 import Faq from "./afterLogin/Faq";
-
 import { navigationRef } from "./NavigationService";
+import { useSelector, useDispatch } from "react-redux";
+import { setUserId } from "./redux/reducer/loginSlice";
 
 const BeforeLoginStack = createNativeStackNavigator();
 const WithoutDrawerStack = createNativeStackNavigator();
@@ -46,12 +47,6 @@ const AfterLogin = () => {
   );
 };
 
-{
-  /* <AfterLoginStack.Navigator screenOptions={{ headerShown: false }}>
-        <AfterLoginStack.Screen name={"Home"} component={Home} />
-      </AfterLoginStack.Navigator> */
-}
-
 const WithoutDrawer = () => {
   return (
     <WithoutDrawerStack.Navigator screenOptions={{ headerShown: false }}>
@@ -75,13 +70,14 @@ const BeforeLogin = () => {
 };
 
 const AuthStack = () => {
-  const [userId, setUserId] = useState("");
   const [showLoader, setShowLoader] = useState(true);
+  var userId = useSelector((state) => state.login.userId);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     Storage.getData("UserId").then((value) => {
       if (value != null && value != undefined && value != "") {
-        setUserId(value);
+        dispatch(setUserId(1));
         setShowLoader(false);
       } else {
         setShowLoader(false);

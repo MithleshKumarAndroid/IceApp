@@ -8,11 +8,10 @@
 
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, View, Text } from "react-native";
-import Splash from "./src/Splash";
 import AuthStack from "./src/navigator";
-import Login from "./src/beforeLogin/Login/index";
 import SplashScreen from "react-native-splash-screen";
-import Navig from "./src/NavigationService";
+import { Provider } from "react-redux";
+import Store from "./src/redux/Store";
 
 const App = () => {
   const [show, setShow] = useState(true);
@@ -24,7 +23,9 @@ const App = () => {
 
   return (
     <SafeAreaView>
-      <AuthStack />
+      <Provider store={Store}>
+        <AuthStack />
+      </Provider>
     </SafeAreaView>
   );
 };

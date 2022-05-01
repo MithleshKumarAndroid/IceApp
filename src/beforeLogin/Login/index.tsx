@@ -27,11 +27,20 @@ import {
   statusCodes,
 } from "@react-native-google-signin/google-signin";
 GoogleSignin.configure();
+import { useSelector, useDispatch } from "react-redux";
+import { decrement, increment } from "../../redux/reducer/userSlice";
+import { login } from "../../redux/reducer/loginSlice";
+import { RootState } from "../../redux/Store";
 
 const Login = () => {
   const navigation = useNavigation();
   const [email, setEmail] = useState<string | undefined>("");
   const [password, setPassword] = useState<string | undefined>("");
+
+  const count = useSelector((state: RootState) => state.user.value);
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {}, []);
 
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -46,18 +55,23 @@ const Login = () => {
     } else if (!validateEmail(email)) {
       Alert.alert("Warning", "Please enter valid email");
     } else {
-      console.log("----submith----->");
-      Storage.storeData("UserId", "1");
-      Storage.getData("UserId").then((value) => {
-        console.log("-----UserId--->", value);
-        if (value != null && value != "" && value != undefined) {
-          // navigation.navigate("HomePage");
-          navigation.reset({
-            index: 0,
-            routes: [{ name: "HomePage" }],
-          });
-        }
-      });
+      let pars = {
+        email: email,
+        password: password,
+      };
+      dispatch(login(pars));
+      // console.log("----submith----->");
+      // Storage.storeData("UserId", "1");
+      // Storage.getData("UserId").then((value) => {
+      //   console.log("-----UserId--->", value);
+      //   if (value != null && value != "" && value != undefined) {
+      //     // navigation.navigate("HomePage");
+      //     navigation.reset({
+      //       index: 0,
+      //       routes: [{ name: "HomePage" }],
+      //     });
+      //   }
+      // });
     }
   };
 

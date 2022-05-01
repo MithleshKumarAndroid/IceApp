@@ -21,9 +21,12 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import * as Storage from "../../utily/Storage";
 import { useNavigation, CommonActions } from "@react-navigation/native";
 import * as NavigationService from "../../NavigationService";
+import { logout } from "../../redux/reducer/loginSlice";
+import { useDispatch } from "react-redux";
 
 const Drawer = (props: any) => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const clickLogout = () => {
     Alert.alert("", "Thank you for Ordering with R&B Tea.See you soon!", [
@@ -36,10 +39,7 @@ const Drawer = (props: any) => {
         text: "OK",
         onPress: () => {
           // navigation.reset("Login");
-          navigation.reset({
-            index: 0,
-            routes: [{ name: "BeforeLogin" }],
-          });
+          dispatch(logout());
           Storage.storeData("UserId", "");
         },
       },
