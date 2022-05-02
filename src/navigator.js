@@ -38,11 +38,18 @@ const AfterLogin = () => {
       }}
     >
       <DrawerStack.Screen name={"Home"} component={Home} />
-      <DrawerStack.Screen name={"Profile"} component={Profile} />
+      <DrawerStack.Screen
+        name={"Profile"}
+        component={Profile}
+        options={{
+          swipeEnabled: false,
+          drawerStyle: { height: 0 },
+        }}
+      />
       <DrawerStack.Screen name={"Offer"} component={Offer} />
       <DrawerStack.Screen name={"Order"} component={Order} />
       <DrawerStack.Screen name={"Faq"} component={Faq} />
-      <DrawerStack.Screen name={"BeforeLogin"} component={BeforeLogin} />
+      <DrawerStack.Screen name={"WithoutDrawer"} component={WithoutDrawer} />
     </DrawerStack.Navigator>
   );
 };
