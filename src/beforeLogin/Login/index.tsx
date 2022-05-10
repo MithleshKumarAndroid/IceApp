@@ -20,6 +20,8 @@ import { validateEmail } from "../../utily/validation";
 import { useNavigation } from "@react-navigation/native";
 import Label from "../../Component/Label";
 import * as Storage from "../../utily/Storage";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import ProgressBar  from "../../utily/ProgressBar";
 
 import {
   GoogleSignin,
@@ -28,19 +30,21 @@ import {
 } from "@react-native-google-signin/google-signin";
 GoogleSignin.configure();
 import { useSelector, useDispatch } from "react-redux";
-import { decrement, increment } from "../../redux/reducer/userSlice";
-import { login } from "../../redux/reducer/loginSlice";
+import { login, UserLogin } from "../../redux/reducer/loginSlice";
 import { RootState } from "../../redux/Store";
+
 
 const Login = () => {
   const navigation = useNavigation();
   const [email, setEmail] = useState<string | undefined>("");
   const [password, setPassword] = useState<string | undefined>("");
+  const [showPassword, setShowPassword]= useState<boolean>(false);
 
-  const count = useSelector((state: RootState) => state.user.value);
+  const loader = useSelector((state: RootState) => state.login.loader);
   const dispatch = useDispatch();
 
-  React.useEffect(() => {}, []);
+
+  React.useEffect(() => { }, []);
 
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -59,7 +63,9 @@ const Login = () => {
         email: email,
         password: password,
       };
-      dispatch(login(pars));
+      // dispatch(UserLogin(pars));
+      dispatch(UserLogin(pars))
+      // UserLogin();
       // console.log("----submith----->");
       // Storage.storeData("UserId", "1");
       // Storage.getData("UserId").then((value) => {
@@ -108,6 +114,7 @@ const Login = () => {
         style={{ flexGrow: 1 }}
       >
         <ScrollView contentContainerStyle={{ paddingBottom: scale(80) }}> */}
+        <ProgressBar loader={loader} />
       <FastImage
         style={{ width: "100%", height: scale(230) }}
         source={loginBack}
@@ -127,14 +134,32 @@ const Login = () => {
           Ref={emailRef}
           SubmitEditing={() => passwordRef.current?.focus()}
         />
-        <EditText
-          Ref={passwordRef}
-          Style={{ marginTop: scale(10) }}
-          Placeholder={"Please enter password"}
-          ChangeText={(txt) => setPassword(txt.trim())}
-          ReturnKeyType={"done"}
-          SubmitEditing={() => Keyboard.dismiss()}
-        />
+
+        <View style={{
+          width: "100%",
+          height: scale(40),
+          borderColor: "grey",
+          borderWidth: scale(0.5),
+          borderRadius: scale(5),
+          marginTop: scale(10),
+          flexDirection: "row"
+
+        }}  >
+          <EditText
+            Ref={passwordRef}
+            Style={{ borderWidth: 0, width: "90%" }}
+            Placeholder={"Please enter password"}
+            ChangeText={(txt) => setPassword(txt.trim())}
+            ReturnKeyType={"done"}
+            SubmitEditing={() => Keyboard.dismiss()}
+            SecureText={!showPassword}
+          />
+          <TouchableOpacity style={{ width: "10%", height: "100%", justifyContent: "center", alignItems: "center" }}
+          onPress={()=> setShowPassword(!showPassword)}
+          >
+            <FontAwesome name={ showPassword ? "eye"  : "eye-slash"} color={"grey"} size={scale(15)} />
+          </TouchableOpacity>
+        </View>
         <TouchableOpacity
           style={styles.forgot_Con}
           onPress={() => navigation.navigate("Forgot")}

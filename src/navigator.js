@@ -11,7 +11,7 @@ import Drawer from "./afterLogin/Drawer";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import ForgotPassword from "./beforeLogin/ForgotPass";
 import { scale } from "react-native-size-matters";
-import ProgressBar from "./Component/ProgressBar";
+import ProgressBar from "./utily/ProgressBar";
 import Profile from "./afterLogin/Profile";
 import Offer from "./afterLogin/Offer";
 import Order from "./afterLogin/Order";
@@ -95,7 +95,7 @@ const AuthStack = () => {
   return (
     <View style={{ width: "100%", height: "100%" }}>
       {showLoader ? (
-        <ProgressBar showLoader={showLoader} />
+        <ProgressBar loader={showLoader} />
       ) : (
         <NavigationContainer ref={navigationRef}>
           {userId ? <AfterLogin /> : <BeforeLogin />}

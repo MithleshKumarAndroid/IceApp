@@ -19,6 +19,10 @@ import Button from "../../Component/Button";
 import { validateEmail } from "../../utily/validation";
 import { launchCamera, launchImageLibrary } from "react-native-image-picker";
 import ImageDialog from "../../Dialog/ImageDialog";
+import {UserRegister} from "../../redux/reducer/RegisterSlice";
+import {useSelector, useDispatch}  from "react-redux";
+import  ProgressBar from "../../utily/ProgressBar";
+
 
 const Signup = ({ navigation: any }) => {
   const [email, setEmail] = useState<string | undefined>("");
@@ -27,6 +31,14 @@ const Signup = ({ navigation: any }) => {
   const [Conpassword, setConPassword] = useState<string | undefined>("");
   const [address, setAddress] = useState<string | undefined>("");
   const [showImageOption, setImageImageOption] = useState<boolean>(false);
+  var loader = useSelector((state) => state.UserRegister.loader);
+  const dispatch = useDispatch();
+
+
+  React.useEffect(()=>{
+    console.log("------loader---->", loader);
+
+  },[]);
 
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -61,6 +73,13 @@ const Signup = ({ navigation: any }) => {
       Alert.alert("Warning", "Please enter valid phone number");
     } else {
       console.log("-------submit---->");
+      let pars={
+          "email":email,
+          "password":password,
+          "phone" :phone,
+          "address":address
+      }
+      dispatch(UserRegister(pars))
     }
   };
 
@@ -79,10 +98,12 @@ const Signup = ({ navigation: any }) => {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={{ flex: 1 }}
       >
+          <ProgressBar  loader={loader} />
         <ScrollView contentContainerStyle={{ paddingBottom: scale(80) }}>
           <View
             style={{ width: "90%", height: "100%", marginHorizontal: "5%" }}
           >
+          
             <ImageDialog
               CloseDialg={() => setImageImageOption(false)}
               Visible={showImageOption}
@@ -101,13 +122,12 @@ const Signup = ({ navigation: any }) => {
               source={profileIcon}
               resizeMode={FastImage.resizeMode.cover}
             />
-            <TouchableOpacity
+            {/* <TouchableOpacity
               onPress={() => setImageImageOption(!showImageOption)}
               style={{ alignSelf: "center", marginTop: scale(10) }}
             >
               <Text style={{ fontSize: scale(12) }}>Change Picture</Text>
-            </TouchableOpacity>
-
+            </TouchableOpacity> */}
             <Label Title={"Email"} />
             <EditText
               Value={email}

@@ -26,6 +26,7 @@ export interface Props {
     | "decimal-pad";
   Value?: string | undefined;
   MaxLength?: number | undefined;
+  SecureText?:boolean |false
 }
 
 const EditText = (props: Props) => {
@@ -39,6 +40,7 @@ const EditText = (props: Props) => {
     KeyboardType,
     Value,
     MaxLength,
+    SecureText
   } = props;
 
   return (
@@ -65,6 +67,7 @@ const EditText = (props: Props) => {
         onSubmitEditing={SubmitEditing}
         keyboardType={KeyboardType}
         maxLength={MaxLength}
+        secureTextEntry={SecureText}
       />
     </View>
   );

@@ -23,9 +23,9 @@ const App = () => {
 
   return (
     <SafeAreaView>
-      <Provider store={Store}>
-        <AuthStack />
-      </Provider>
+        <Provider store={Store}>
+          <AuthStack />
+        </Provider>
     </SafeAreaView>
   );
 };
