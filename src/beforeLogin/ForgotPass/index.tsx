@@ -15,15 +15,27 @@ import Label from "../../Component/Label";
 import EditText from "../../Component/EditText";
 import Button from "../../Component/Button";
 import { validateEmail } from "../../utily/validation";
+import {ForgotPasswordApi} from "../../redux/reducer/ForgotSlice";
+import {useDispatch , useSelector} from "react-redux";
+import ProgressBar from "../../utily/ProgressBar";
+import {RootState} from "../../redux/Store";
+
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState<string | undefined>("");
+  const dispatch = useDispatch();
+  const Loader = useSelector((state : RootState)=> state.ForgotSlice.loader);
 
   const submit = () => {
     if (!email) {
       Alert.alert("Warning", "Please enter email");
     } else if (!validateEmail(email)) {
       Alert.alert("Warning", "Please enter valid email");
+    }
+    else
+    {
+      let pars={  "email":email}
+      dispatch(ForgotPasswordApi(pars))
     }
   };
 
@@ -64,6 +76,7 @@ const ForgotPassword = () => {
           />
         </View>
       </ScrollView>
+      <ProgressBar loader={Loader} />
     </KeyboardAvoidingView>
   );
 };

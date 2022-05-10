@@ -3,6 +3,7 @@ import loginSlice from "./reducer/loginSlice";
 import UserLogin from "./reducer/loginSlice";
 import UserRegister from "./reducer/RegisterSlice";
 import thunkMiddleware from 'redux-thunk';
+import ForgotSlice from "./reducer/ForgotSlice";
 
 
 
@@ -10,7 +11,8 @@ export const store =configureStore({
   reducer: {
     login: loginSlice,
     UserLogin: UserLogin,
-    UserRegister:UserRegister
+    UserRegister:UserRegister,
+    ForgotSlice:ForgotSlice
   },
   middleware: [thunkMiddleware],
 });
