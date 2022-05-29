@@ -50,6 +50,7 @@ const Login = () => {
   const passwordRef = useRef();
 
   const submit = () => {
+    Keyboard.dismiss();
     if (!email && !password) {
       Alert.alert("Warning", "Both fileds are required");
     } else if (!email) {
@@ -59,25 +60,12 @@ const Login = () => {
     } else if (!validateEmail(email)) {
       Alert.alert("Warning", "Please enter valid email");
     } else {
+
       let pars = {
-        email: email,
-        password: password,
+        email: email.toLowerCase(),
+        password: password.trim(),
       };
-      // dispatch(UserLogin(pars));
       dispatch(UserLogin(pars))
-      // UserLogin();
-      // console.log("----submith----->");
-      // Storage.storeData("UserId", "1");
-      // Storage.getData("UserId").then((value) => {
-      //   console.log("-----UserId--->", value);
-      //   if (value != null && value != "" && value != undefined) {
-      //     // navigation.navigate("HomePage");
-      //     navigation.reset({
-      //       index: 0,
-      //       routes: [{ name: "HomePage" }],
-      //     });
-      //   }
-      // });
     }
   };
 

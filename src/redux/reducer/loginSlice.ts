@@ -16,7 +16,6 @@ export const UserLogin  =  createAsyncThunk(
           }).then((res)=>{
             return res;
           }).catch((Error)=>{
-            console.log("--UserLogin--Error---->", Error);
             Toast.show("Please try again")
             return Error;
           })
@@ -66,7 +65,7 @@ export const LoginSlice = createSlice({
         state.userId = action.payload.data.userId;
           state.userEmail= action.payload.data.email;
           state.userName= action.payload.data;
-          Storage.storeData("UserId", action.payload.data.userId.toString());
+          Storage.storeData("UserId", JSON.stringify(action.payload.data.userId));
          Toast.show("Login Successfully")
       }
      
@@ -77,8 +76,5 @@ export const LoginSlice = createSlice({
   }
 });
 
-
-
-// Action creators are generated for each case reducer function
 export const { login, setUserId, logout } = LoginSlice.actions;
 export default LoginSlice.reducer;

@@ -16,9 +16,11 @@ import Profile from "./afterLogin/Profile";
 import Offer from "./afterLogin/Offer";
 import Order from "./afterLogin/Order";
 import Faq from "./afterLogin/Faq";
+import EditProfile from "./afterLogin/Profile/EditProfile";
 import { navigationRef } from "./NavigationService";
 import { useSelector, useDispatch } from "react-redux";
 import { setUserId } from "./redux/reducer/loginSlice";
+import ProductDetails from "../src/afterLogin/OurCategory/ProductDetails";
 
 const BeforeLoginStack = createNativeStackNavigator();
 const WithoutDrawerStack = createNativeStackNavigator();
@@ -46,9 +48,26 @@ const AfterLogin = () => {
           drawerStyle: { height: 0 },
         }}
       />
+       <DrawerStack.Screen
+        name={"EditProfile"}
+        component={EditProfile}
+        options={{
+          swipeEnabled: false,
+          drawerStyle: { height: 0 },
+        }}
+      />
+       <DrawerStack.Screen
+        name={"ProductDetails"}
+        component={ProductDetails}
+        options={{
+          swipeEnabled: false,
+          drawerStyle: { height: 0 },
+        }}
+      />
       <DrawerStack.Screen name={"Offer"} component={Offer} />
       <DrawerStack.Screen name={"Order"} component={Order} />
       <DrawerStack.Screen name={"Faq"} component={Faq} />
+      
       <DrawerStack.Screen name={"WithoutDrawer"} component={WithoutDrawer} />
     </DrawerStack.Navigator>
   );

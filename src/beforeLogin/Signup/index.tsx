@@ -19,27 +19,29 @@ import Button from "../../Component/Button";
 import { validateEmail } from "../../utily/validation";
 import { launchCamera, launchImageLibrary } from "react-native-image-picker";
 import ImageDialog from "../../Dialog/ImageDialog";
-import {UserRegister} from "../../redux/reducer/RegisterSlice";
-import {useSelector, useDispatch}  from "react-redux";
-import  ProgressBar from "../../utily/ProgressBar";
+import { UserRegister } from "../../redux/reducer/RegisterSlice";
+import { useSelector, useDispatch } from "react-redux";
+import ProgressBar from "../../utily/ProgressBar";
 
-
-const Signup = ({ navigation: any }) => {
+const Signup = (navigation: any) => {
   const [email, setEmail] = useState<string | undefined>("");
   const [phone, setPhone] = useState<string | undefined>("");
   const [password, setPassword] = useState<string | undefined>("");
   const [Conpassword, setConPassword] = useState<string | undefined>("");
   const [address, setAddress] = useState<string | undefined>("");
   const [showImageOption, setImageImageOption] = useState<boolean>(false);
+  const [firstName, setFirstName] = useState<string>("");
+  const [lastName, setLastName] = useState<string>("");
   var loader = useSelector((state) => state.UserRegister.loader);
+
   const dispatch = useDispatch();
 
-
-  React.useEffect(()=>{
+  React.useEffect(() => {
     console.log("------loader---->", loader);
+  }, []);
 
-  },[]);
-
+  const firstRef = useRef();
+  const lastRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
   const conPasswordRef = useRef();
@@ -52,9 +54,15 @@ const Signup = ({ navigation: any }) => {
       !phone?.trim() &&
       !password?.trim() &&
       !Conpassword?.trim() &&
-      !address?.trim()
+      !address?.trim() &&
+      !firstName.trim() &&
+      !lastName.trim()
     ) {
       Alert.alert("Warning", "All fields are required");
+    } else if (!firstName) {
+      Alert.alert("Warning", "Please enter first name");
+    } else if (!lastName) {
+      Alert.alert("Warning", "Please enter last name");
     } else if (!email) {
       Alert.alert("Warning", "Please enter email");
     } else if (!validateEmail(email)) {
@@ -73,13 +81,15 @@ const Signup = ({ navigation: any }) => {
       Alert.alert("Warning", "Please enter valid phone number");
     } else {
       console.log("-------submit---->");
-      let pars={
-          "email":email,
-          "password":password,
-          "phone" :phone,
-          "address":address
-      }
-      dispatch(UserRegister(pars))
+      let pars = {
+        email: email,
+        password: password,
+        phone: phone,
+        address: address,
+        firstname: firstName,
+        lastname: lastName,
+      };
+      dispatch(UserRegister(pars));
     }
   };
 
@@ -98,12 +108,11 @@ const Signup = ({ navigation: any }) => {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={{ flex: 1 }}
       >
-          <ProgressBar  loader={loader} />
+        <ProgressBar loader={loader} />
         <ScrollView contentContainerStyle={{ paddingBottom: scale(80) }}>
           <View
             style={{ width: "90%", height: "100%", marginHorizontal: "5%" }}
           >
-          
             <ImageDialog
               CloseDialg={() => setImageImageOption(false)}
               Visible={showImageOption}
@@ -128,8 +137,30 @@ const Signup = ({ navigation: any }) => {
             >
               <Text style={{ fontSize: scale(12) }}>Change Picture</Text>
             </TouchableOpacity> */}
-            <Label Title={"Email"} />
+            <Label Title={"First Name"} />
             <EditText
+              Value={firstName}
+              Style={{ marginTop: scale(10) }}
+              Placeholder={"Please enter a first name"}
+              SubmitEditing={() => lastRef.current?.focus()}
+              ReturnKeyType={"next"}
+              KeyboardType={"default"}
+              ChangeText={(txt) => setFirstName(txt.trim())}
+            />
+            <Label Style={{ marginTop: scale(10) }} Title={"Last Name"} />
+            <EditText
+              Ref={lastRef}
+              Value={lastName}
+              Style={{ marginTop: scale(10) }}
+              Placeholder={"Please enter a last name"}
+              SubmitEditing={() => emailRef.current?.focus()}
+              ReturnKeyType={"next"}
+              KeyboardType={"default"}
+              ChangeText={(txt) => setLastName(txt.trim())}
+            />
+            <Label Style={{ marginTop: scale(10) }} Title={"Email"} />
+            <EditText
+              Ref={emailRef}
               Value={email}
               Style={{ marginTop: scale(10) }}
               Placeholder={"Please enter a email"}

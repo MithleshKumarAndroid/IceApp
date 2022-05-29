@@ -6,6 +6,7 @@ export interface Props {
   Placeholder?: string;
   ChangeText?(txt: string): void;
   Style?: TextStyle;
+  EditTextStyle?:TextStyle
   ReturnKeyType?:
     | "done"
     | "go"
@@ -26,7 +27,8 @@ export interface Props {
     | "decimal-pad";
   Value?: string | undefined;
   MaxLength?: number | undefined;
-  SecureText?:boolean |false
+  SecureText?:boolean |false;
+  Editable?:boolean|false
 }
 
 const EditText = (props: Props) => {
@@ -40,7 +42,9 @@ const EditText = (props: Props) => {
     KeyboardType,
     Value,
     MaxLength,
-    SecureText
+    SecureText,
+    Editable,
+    EditTextStyle
   } = props;
 
   return (
@@ -59,7 +63,7 @@ const EditText = (props: Props) => {
       <TextInput
         value={Value}
         ref={Ref}
-        style={{ width: "90%", marginHorizontal: "5%", height: "100%" }}
+        style={[{ width: "90%", marginHorizontal: "5%", height: "100%"}, {...EditTextStyle} ]}
         placeholder={Placeholder}
         onChangeText={ChangeText}
         returnKeyType={ReturnKeyType}
@@ -68,6 +72,7 @@ const EditText = (props: Props) => {
         keyboardType={KeyboardType}
         maxLength={MaxLength}
         secureTextEntry={SecureText}
+        editable={Editable}
       />
     </View>
   );

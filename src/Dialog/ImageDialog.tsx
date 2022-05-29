@@ -42,18 +42,6 @@ const ImageDialog = (props: Props) => {
             }}
           >
             <TouchableOpacity
-              style={{
-                width: "96%",
-                marginHorizontal: "2%",
-                height: scale(55),
-                borderBottomColor: "grey",
-                borderBottomWidth: scale(1),
-                justifyContent: "center",
-              }}
-            >
-              <Label Title={"Please select option"} />
-            </TouchableOpacity>
-            <TouchableOpacity
               onPress={ClickCamera}
               style={{
                 width: "96%",

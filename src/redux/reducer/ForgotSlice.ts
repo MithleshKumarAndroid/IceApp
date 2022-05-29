@@ -1,6 +1,4 @@
-import React from "react";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import * as Storage from "../../utily/Storage";
 import axios from "axios";
 import {Base_Url, Forgot_Api} from "../../Service/Api";
 import { Alert } from "react-native";
@@ -16,7 +14,6 @@ export  const ForgotPasswordApi = createAsyncThunk(
         }).then((res)=>{
             return res;
         }).catch((Error)=>{
-            console.log("-----Error--->", Error);
             return Error;
         })
     }
