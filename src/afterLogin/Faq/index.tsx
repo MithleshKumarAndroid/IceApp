@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
+import { View, StyleSheet, ScrollView, TouchableOpacity, Text } from "react-native";
 import { scale } from "react-native-size-matters";
 import Header from "../../Component/Header";
 import FastImage from "react-native-fast-image";
@@ -7,7 +7,7 @@ import FastImage from "react-native-fast-image";
 import { faqIcon } from "../../image";
 import Label from "../../Component/Label";
 
-const Faq = () => {
+const Faq = (props : any) => {
   return (
     <View style={styles.main}>
       <Header Label={"FAQ"} />

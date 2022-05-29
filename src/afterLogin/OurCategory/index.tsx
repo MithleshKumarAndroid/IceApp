@@ -37,7 +37,6 @@ const Main = () => {
 
   const clickCategory = (ITEM: any, INDEX: number) => {
     setSelectedIndex(INDEX);
-    console.log("--ITEM----->", ITEM.category_id);
     let pars = {
       franchId: route?.params?.ITEM.franchaising_id,
       catId: ITEM.category_id,
@@ -52,8 +51,12 @@ const Main = () => {
       <View style={styles.sub_Main}>
         <View style={styles.scroll_Container}>
           {category?.length > 0 && (
-            <ScrollView horizontal={true} nestedScrollEnabled={true}>
-              {category?.map((item: any, index : number) => {
+            <ScrollView
+              horizontal={true}
+              nestedScrollEnabled={true}
+              showsHorizontalScrollIndicator={false}
+            >
+              {category?.map((item: any, index: number) => {
                 return (
                   <TouchableOpacity
                     key={index}

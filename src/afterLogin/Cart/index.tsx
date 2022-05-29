@@ -7,6 +7,7 @@ import Label from "../../Component/Label";
 import { cartProductIcon } from "../../image";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import Swipeable from "react-native-gesture-handler/Swipeable";
+import { deleteIcon } from "../../image";
 import styles from "./styles";
 const DATA = [
   {
@@ -46,17 +47,11 @@ const Cart = () => {
 
     const renderRightActions = (progress: any, dragX: any, onClick: any) => {
       return (
-        <TouchableOpacity
-          onPress={onClick}
-          style={{
-            margin: 0,
-            alignContent: "center",
-            justifyContent: "center",
-            width: 70,
-          }}
-        >
-          <Label Title="DELETE" />
-        </TouchableOpacity>
+        <View style={styles.delete_Con}>
+          <TouchableOpacity onPress={onClick} style={styles.delete_Icon_Con}>
+            <Image source={deleteIcon} style={styles.delete} />
+          </TouchableOpacity>
+        </View>
       );
     };
 

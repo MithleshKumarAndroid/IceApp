@@ -24,11 +24,11 @@ import { updateProfile } from "../../../redux/reducer/ProfileSlice";
 import { useDispatch, useSelector } from "react-redux";
 import * as Storage from "../../../utily/Storage";
 import { RootState } from "../../../redux/Store";
-
+import { Base_Url_Profile } from "../../../Service/Api";
 
 const EditProfile = () => {
   const dispatch = useDispatch<any>();
-  const {loader, user} = useSelector((state: RootState) => state.Profile);
+  const { loader, user } = useSelector((state: RootState) => state.Profile);
   const route = useRoute<any>();
   const [email, setEmail] = useState<string | undefined>("");
   const [phone, setPhone] = useState<string | undefined>("");
@@ -40,6 +40,7 @@ const EditProfile = () => {
   const [lastName, setLastName] = useState<string>("");
   const [profile, setProfileImage] = useState<any>("");
   const [photoName, setPhotoName] = useState<string>("");
+  const [profileUrl, setProfileUrl]= useState<any>("")
 
   const firstRef = useRef<any>();
   const lastRef = useRef<any>();
@@ -49,6 +50,7 @@ const EditProfile = () => {
 
   useEffect(() => {
     let mUser = route.params?.USER;
+    setProfileUrl(mUser.profile_pic);
     setFirstName(mUser.firstname);
     setLastName(mUser.lastname);
     setEmail(mUser.email);
@@ -63,7 +65,7 @@ const EditProfile = () => {
         mediaType: "images",
       },
     };
-    launchImageLibrary({mediaType: "photo"}, (res :any) => {
+    launchImageLibrary({ mediaType: "photo" }, (res: any) => {
       console.log("Response = ", res);
       if (res.didCancel) {
         console.log("User cancelled image picker");
@@ -80,8 +82,7 @@ const EditProfile = () => {
   };
 
   const openCamera = () => {
-    launchCamera({ mediaType: "photo", saveToPhotos: false }, (res) => {
-      console.log("Response--launchCamera---= ", res);
+    launchCamera({ mediaType: "photo", saveToPhotos: false }, (res : any) => {
       if (res.didCancel) {
         console.log("User cancelled image picker");
       } else if (res.errorCode) {
@@ -89,7 +90,7 @@ const EditProfile = () => {
       } else if (res.errorMessage) {
         console.log("ImagePicker errorMessage: ", res.errorMessage);
       } else {
-        setProfileImage(res?.assets);
+        setProfileImage(res?.assets[0].uri);
         setImageImageOption(false);
       }
     });
@@ -125,19 +126,23 @@ const EditProfile = () => {
         formData.append("address", address);
         formData.append("firstname", firstName.trim());
         formData.append("lastname", lastName.trim());
-        // formData.append("profile_pic", {
-        //   name: photoName,
-        //   type: "image/jpg",
-        //   uri: Platform.OS === "ios" ? profile.replace("file://", "") : profile,
-        // });
-        let pars={
-          email : email,
+        formData.append("id", "8");
+        if (profile != "") {
+          formData.append("profile_pic", {
+            uri:
+              Platform.OS === "ios" ? profile.replace("file://", "") : profile,
+            type: "image/jpeg",
+            name: "photo.jpg",
+          });
+        }
+        let pars = {
+          email: email,
           phone: phone,
           address: address,
           firstname: firstName.trim(),
           lastname: lastName.trim(),
-        }
-        dispatch(updateProfile(pars))
+        };
+        dispatch(updateProfile(formData));
       });
     }
   };
@@ -169,15 +174,15 @@ const EditProfile = () => {
                 alignSelf: "center",
                 marginTop: scale(20),
               }}
-              source={profile ? { uri: profile } : profileIcon}
-              resizeMode={FastImage.resizeMode.cover}
+              source={profile ? { uri: profile } :  profileUrl === ""?   profileIcon :{uri :  Base_Url_Profile+ profileUrl}}
+              // resizeMode={FastImage.resizeMode.cover}
             />
-            {/* <TouchableOpacity
+            <TouchableOpacity
               onPress={() => setImageImageOption(!showImageOption)}
               style={{ alignSelf: "center", marginTop: scale(10) }}
             >
               <Text style={{ fontSize: scale(12) }}>Change Picture</Text>
-            </TouchableOpacity> */}
+            </TouchableOpacity>
             <Label Title={"First Name"} />
             <EditText
               Value={firstName}
@@ -245,7 +250,6 @@ const EditProfile = () => {
             />
           </View>
         </ScrollView>
-        
       </KeyboardAvoidingView>
     </View>
   );

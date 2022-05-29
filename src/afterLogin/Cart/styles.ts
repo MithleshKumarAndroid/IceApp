@@ -84,6 +84,25 @@ const styles = StyleSheet.create({
   },
   button_Con:{
     width: scale(200), borderRadius: scale(20)
+  },
+  delete_Con:{
+    margin: 0,
+    alignContent: "center",
+    justifyContent: "center",
+    width: 70,
+  },
+  delete_Icon_Con:{
+    width: scale(34),
+    height: scale(34),
+    borderRadius: scale(17),
+    backgroundColor: "red",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  delete:{
+    resizeMode: "contain",
+    width: scale(15),
+    height: scale(15),
   }
 });
 

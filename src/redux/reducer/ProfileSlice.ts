@@ -22,11 +22,14 @@ export const getProfile = createAsyncThunk("getProfile", async (userId) => {
 });
 
 export const updateProfile = createAsyncThunk("updateProfile", async (pars :any) => {
-  let mUserId = await getUser();
   return await axios({
-    method: "PUT",
-    url: Base_Url + Update_Profile + mUserId,
+    method:"POST",
+    url: Base_Url + Update_Profile ,
     data: pars,
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'multipart/form-data',
+    },
   })
     .then((res) => {
       return res?.data;

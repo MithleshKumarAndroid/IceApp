@@ -29,3 +29,4 @@ export const cartProductIcon = require("./cartProduct.png");
 export const workPlaceIcon = require("./workPlace.png");
 export const avatarIcon = require("./avatar.png");
 export const faqIcon = require("./faq.png");
+export const deleteIcon= require("./deleteIcon.png");

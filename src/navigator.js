@@ -23,8 +23,22 @@ import { setUserId } from "./redux/reducer/loginSlice";
 import ProductDetails from "../src/afterLogin/OurCategory/ProductDetails";
 
 const BeforeLoginStack = createNativeStackNavigator();
-const WithoutDrawerStack = createNativeStackNavigator();
 const DrawerStack = createDrawerNavigator();
+const HomeStack = createNativeStackNavigator();
+
+function WithoutDrawer() {
+  return (
+    <HomeStack.Navigator screenOptions={{ headerShown: false }}>
+      <HomeStack.Screen name="Home" component={Home} />
+      <HomeStack.Screen name="Profile" component={Profile} />
+      <HomeStack.Screen name="EditProfile" component={EditProfile} />
+      <HomeStack.Screen name="ProductDetails" component={ProductDetails} />
+      <HomeStack.Screen name="Offer" component={Offer} />
+      <HomeStack.Screen name="Order" component={Order} />
+      <HomeStack.Screen name="Faq" component={Faq} />
+    </HomeStack.Navigator>
+  );
+}
 
 const AfterLogin = () => {
   return (
@@ -39,45 +53,12 @@ const AfterLogin = () => {
         },
       }}
     >
-      <DrawerStack.Screen name={"Home"} component={Home} />
       <DrawerStack.Screen
-        name={"Profile"}
-        component={Profile}
-        options={{
-          swipeEnabled: false,
-          drawerStyle: { height: 0 },
-        }}
+        name="WithoutDrawer"
+        component={WithoutDrawer}
+        options={{ headerShown: false }}
       />
-       <DrawerStack.Screen
-        name={"EditProfile"}
-        component={EditProfile}
-        options={{
-          swipeEnabled: false,
-          drawerStyle: { height: 0 },
-        }}
-      />
-       <DrawerStack.Screen
-        name={"ProductDetails"}
-        component={ProductDetails}
-        options={{
-          swipeEnabled: false,
-          drawerStyle: { height: 0 },
-        }}
-      />
-      <DrawerStack.Screen name={"Offer"} component={Offer} />
-      <DrawerStack.Screen name={"Order"} component={Order} />
-      <DrawerStack.Screen name={"Faq"} component={Faq} />
-      
-      <DrawerStack.Screen name={"WithoutDrawer"} component={WithoutDrawer} />
     </DrawerStack.Navigator>
-  );
-};
-
-const WithoutDrawer = () => {
-  return (
-    <WithoutDrawerStack.Navigator screenOptions={{ headerShown: false }}>
-      <WithoutDrawerStack.Screen name={"Profile"} component={Profile} />
-    </WithoutDrawerStack.Navigator>
   );
 };
 
