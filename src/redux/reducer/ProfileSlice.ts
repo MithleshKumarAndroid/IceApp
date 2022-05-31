@@ -21,23 +21,26 @@ export const getProfile = createAsyncThunk("getProfile", async (userId) => {
     });
 });
 
-export const updateProfile = createAsyncThunk("updateProfile", async (pars :any) => {
-  return await axios({
-    method:"POST",
-    url: Base_Url + Update_Profile ,
-    data: pars,
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'multipart/form-data',
-    },
-  })
-    .then((res) => {
-      return res?.data;
+export const updateProfile = createAsyncThunk(
+  "updateProfile",
+  async (pars: any) => {
+    return await axios({
+      method: "POST",
+      url: Base_Url + Update_Profile,
+      data: pars,
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "multipart/form-data",
+      },
     })
-    .catch((Error) => {
-      return Error;
-    });
-});
+      .then((res) => {
+        return res?.data;
+      })
+      .catch((Error) => {
+        return Error;
+      });
+  }
+);
 
 export interface profileState {
   loader?: boolean;

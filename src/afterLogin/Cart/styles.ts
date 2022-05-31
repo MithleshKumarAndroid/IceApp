@@ -3,9 +3,9 @@ import { scale } from "react-native-size-matters";
 
 const styles = StyleSheet.create({
   main: {
-      flex:1
+    flex: 1,
   },
-  sub_Main:{
+  sub_Main: {
     width: "96%",
     marginHorizontal: "2%",
     height: "80%",
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   product_Image: {
     width: scale(70),
     height: scale(70),
-    resizeMode: "contain",
+    borderRadius: scale(10),
   },
   listSecond_Child: {
     width: "70%",
@@ -48,10 +48,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: scale(10),
   },
-  price_Label:{
-    fontSize: scale(10), color: "red"
+  price_Label: {
+    fontSize: scale(10),
+    color: "red",
+    marginLeft: scale(2),
   },
-  plus_Minus_Container:{
+  plus_Minus_Container: {
     width: scale(50),
     height: scale(20),
     backgroundColor: "#10A8B2",
@@ -59,39 +61,40 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  minus_Container:{
+  minus_Container: {
     width: scale(20),
     height: "100%",
     justifyContent: "center",
     alignItems: "center",
   },
-  quantity_Label:{
+  quantity_Label: {
     color: "#FFF",
     fontSize: scale(10),
     alignSelf: "center",
   },
-  plus_Container:{
+  plus_Container: {
     width: scale(20),
     height: "100%",
     justifyContent: "center",
     alignItems: "center",
   },
-  complete_Order_Container:{
+  complete_Order_Container: {
     width: "100%",
     height: "12%",
     justifyContent: "center",
     alignItems: "center",
   },
-  button_Con:{
-    width: scale(200), borderRadius: scale(20)
+  button_Con: {
+    width: scale(200),
+    borderRadius: scale(20),
   },
-  delete_Con:{
+  delete_Con: {
     margin: 0,
     alignContent: "center",
     justifyContent: "center",
     width: 70,
   },
-  delete_Icon_Con:{
+  delete_Icon_Con: {
     width: scale(34),
     height: scale(34),
     borderRadius: scale(17),
@@ -99,11 +102,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  delete:{
+  delete: {
     resizeMode: "contain",
     width: scale(15),
     height: scale(15),
-  }
+  },
 });
 
 export default styles;

@@ -15,3 +15,7 @@ export const Franchaising_Category = "/Globalapicontroller/category/";
 export const Franchaising_Category_Product_Url =
   "/Globalapicontroller/product/";
 export const AddToProduct_Url = "/Globalapicontroller/addToCart";
+export const GetCartProduct_Url="/Globalapicontroller/getCartItems/";
+export const AdditionToProduct_Url="/Globalapicontroller/removeFromCart";
+export const DeleteProductFromCart_Url="/Globalapicontroller/deleteProductFromCart"
+

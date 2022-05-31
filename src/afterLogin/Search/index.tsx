@@ -13,7 +13,7 @@ import ProgressBar from "../../utily/ProgressBar";
 const Search = (props: any) => {
   const dispatch = useDispatch<any>();
   const { loader, data } = useSelector((state: RootState) => state.SearchSlice);
-  const [search, setSearch] = useState<string>("saharanpur");
+  const [search, setSearch] = useState<string>("");
   const [list, setList] = useState<any>([]);
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const Search = (props: any) => {
         </TouchableOpacity>
         <View style={styles.edit_Container}>
           <EditText
-            Placeholder={"Search product here...."}
+            Placeholder={"Search city here...."}
             Style={{ borderWidth: 0 }}
             EditTextStyle={{ width: "100%", marginHorizontal: 0 }}
             Value={search}
@@ -55,6 +55,8 @@ const Search = (props: any) => {
           />
         </View>
       </View>
+
+      {list.length >0 &&
       <FlatList
         data={list}
         style={{ width: "90%", marginHorizontal: "5%" }}
@@ -71,7 +73,10 @@ const Search = (props: any) => {
             </View>
           </TouchableOpacity>
         )}
-      />
+      />}
+
+      {list.length === 0 &&   
+      <Text style={{alignSelf:"center", marginTop : scale(30)}} >Not found. Please try with other city</Text>}
     </View>
   );
 };
