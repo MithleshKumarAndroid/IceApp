@@ -5,7 +5,12 @@ import { starIcon, glassIcon } from "../../image";
 
 const mArray = [1, 2, 3, 4, 5, 6, 7];
 
-const PopularLayout = () => {
+export interface props {
+  List: [] | undefined;
+}
+
+const PopularLayout = (Props: props) => {
+  const { List } = Props;
   return (
     <>
       <ScrollView
@@ -13,7 +18,7 @@ const PopularLayout = () => {
         horizontal={true}
         showsHorizontalScrollIndicator={false}
       >
-        {mArray.map((item, index) => (
+        {List?.map((item: any, index: number) => (
           <View style={styles.main} key={index}>
             <View style={styles.first_Child}>
               <View style={styles.star_Con}>
@@ -21,11 +26,13 @@ const PopularLayout = () => {
                 <Text style={styles.rating_Label}>4.8</Text>
               </View>
               <View>
-                <Text style={styles.name_Lable}>Green Ice Tea</Text>
-                <Text style={styles.price_Label}>$10</Text>
+                <Text style={styles.name_Lable}>{item?.name}</Text>
+                <Text style={styles.price_Label}>
+                  ${" " + item.price / 100}
+                </Text>
               </View>
             </View>
-            <Image style={styles.product_Icon} source={glassIcon} />
+            {/* <Image style={styles.product_Icon} source={glassIcon} /> */}
           </View>
         ))}
       </ScrollView>

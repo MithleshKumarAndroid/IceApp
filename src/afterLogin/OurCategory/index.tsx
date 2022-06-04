@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, ScrollView, TouchableOpacity } from "react-native";
+import { Text, View, ScrollView, TouchableOpacity, Alert } from "react-native";
 import MenuHeader from "../../Component/MenuHeader";
 import Label from "../../Component/Label";
 import Product from "./Product";
@@ -12,6 +12,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/Store";
 import ProgressBar from "../../utily/ProgressBar";
 import styles from "./styles";
+import * as Storage from "../../utily/Storage";
+import { useNavigation } from "@react-navigation/native";
 
 const Main = () => {
   const dispatch = useDispatch<any>();
@@ -19,17 +21,30 @@ const Main = () => {
     (state: RootState) => state.SearchSlice
   );
   const route = useRoute<any>();
+  const navigation = useNavigation();
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const [marchantId, setMarchentId] = useState<string | undefined>("");
 
   useEffect(() => {
-    dispatch(getFranchiesCategory(route?.params?.ITEM.franchaising_id));
-  }, [route?.params?.ITEM]);
+    const unsubscribe = navigation.addListener("focus", () => {
+      Storage.getData("MI").then((value) => {
+        dispatch(getFranchiesCategory(value));
+      });
+    });
+    return unsubscribe;
+  }, [navigation]);
+
+  useEffect(() => {
+    Storage.getData("MI").then((mID) => {
+      setMarchentId(mID?.toString());
+    });
+  }, []);
 
   useEffect(() => {
     if (category?.length > 0) {
       let pars = {
-        franchId: route?.params?.ITEM.franchaising_id,
-        catId: category[0].category_id,
+        marchantId: marchantId,
+        catId: category[selectedIndex].id,
       };
       dispatch(getFranchiesCategoryProduct(pars));
     }
@@ -38,8 +53,8 @@ const Main = () => {
   const clickCategory = (ITEM: any, INDEX: number) => {
     setSelectedIndex(INDEX);
     let pars = {
-      franchId: route?.params?.ITEM.franchaising_id,
-      catId: ITEM.category_id,
+      marchantId: marchantId,
+      catId: category[INDEX].id,
     };
     dispatch(getFranchiesCategoryProduct(pars));
   };
@@ -80,7 +95,20 @@ const Main = () => {
             </ScrollView>
           )}
         </View>
-        <Product List={product} />
+        {product?.length > 0 ? (
+          <Product List={product} />
+        ) : (
+          <View
+            style={{
+              width: "100%",
+              height: "50%",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Label Title="No product item found" />
+          </View>
+        )}
       </View>
       <ProgressBar loader={loader} />
     </View>

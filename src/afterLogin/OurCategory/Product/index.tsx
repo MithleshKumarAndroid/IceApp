@@ -20,7 +20,6 @@ const mArray = [1, 2, 3, 4, 5, 6, 7];
 export interface Props {
   List: [] | undefined;
 }
-
 const Product = (props: Props) => {
   const { List } = props;
   const navigation = useNavigation<any>();
@@ -36,8 +35,10 @@ const Product = (props: Props) => {
             <TouchableOpacity
               style={styles.main}
               key={index}
-              onPress={() =>
+              onPress={() =>{
                 navigation.navigate("ProductDetails", { ITEM: item })
+                // console.log("-------item---->", item);
+              }
               }
             >
               <View style={[styles.first_Child]}>
@@ -46,14 +47,14 @@ const Product = (props: Props) => {
                   <Text style={styles.rating_Label}>4.8</Text>
                 </View>
                 <View style={styles.name_Price_Con}>
-                  <Text style={styles.name_Lable}>{item.title}</Text>
-                  <Text style={styles.price_Label}>${item?.price}</Text>
+                  <Text style={styles.name_Lable}>{item.name}</Text>
+                  <Text style={styles.price_Label}>${" "+item?.price/100}</Text>
                 </View>
               </View>
-              <Image
+              {/* <Image
                 style={styles.product_Icon}
                 source={{ uri: Image_Base_Url_Product + item.image }}
-              />
+              /> */}
             </TouchableOpacity>
           ))}
         </ScrollView>
@@ -62,7 +63,7 @@ const Product = (props: Props) => {
         Style={{ fontSize: scale(13), fontWeight: "bold", color: "#10A8B2" }}
         Title={"Most Popular"}
       />
-      <PopularLayout />
+      <PopularLayout List={List}   />
     </View>
   );
 };

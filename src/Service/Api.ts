@@ -1,4 +1,7 @@
+
+
 export const Base_Url = "https://dezinshop.in/rbtealanding/api";
+export const Clover_Base_Url="https://sandbox.dev.clover.com/v3/merchants/";
 export const Image_Base_Url = "https://dezinshop.in/rbtealanding/assets/";
 export const Image_Base_Url_Product =
   "https://dezinshop.in/rbtealanding/assets/products/";

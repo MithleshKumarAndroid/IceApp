@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { scale } from "react-native-size-matters";
 import MenuHeader from "../../Component/MenuHeader";
 import BannerLayout from "./BannerLayout";
 import TopPickLayout from "./TopPickLayout";
 import BrowserMenuLayout from "./BrowserMenu";
+import * as Storage from "../../utily/Storage";
 
 const HomePage = () => {
+  useEffect(() => {
+    Storage.storeData("MI", "05M56WAC9C491");
+    Storage.storeData("Token","8b78a63f-b7db-51aa-6351-a2f6bc1ebe60");
+  }, []);
+
   return (
     <View style={styles.main}>
       <BannerLayout />

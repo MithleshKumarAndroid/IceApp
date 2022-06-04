@@ -6,6 +6,7 @@ import {
   GetCartProduct_Url,
   AdditionToProduct_Url,
   DeleteProductFromCart_Url,
+  Clover_Base_Url,
 } from "../../Service/Api";
 import Toast from "react-native-simple-toast";
 import * as NavigationService from "../../NavigationService";
@@ -16,26 +17,74 @@ export const addCartProduct = createAsyncThunk(
   async (pars: any, { dispatch }) => {
     return await axios({
       method: "POST",
-      url: Base_Url + AddToProduct_Url,
-      data: pars,
+      url: Clover_Base_Url + pars.id + "/" + "orders",
+      data: { state: "open" },
+      headers: {
+        Accept: "application/json",
+        Authorization: "Bearer 8b78a63f-b7db-51aa-6351-a2f6bc1ebe60",
+      },
     })
       .then((res) => {
-        dispatch(getCartProduct());
-        return res.data;
+        let mPars = {
+          marchentId: pars.id,
+          ordrId: res.data.id,
+          itemId: pars.itemId,
+        };
+        dispatch(addProductInOrder(mPars));
+        return res.data.id;
       })
       .catch((Error) => {
+        console.log("---Error------>", Error);
         return Error;
       });
   }
 );
 
-export const getCartProduct = createAsyncThunk("getCart", async () => {
+export const addProductInOrder = createAsyncThunk(
+  "addProductOrder",
+  async (pars: any, { dispatch }) => {
+    let mPars = {
+      item: { id: pars.itemId },
+    };
+    return await axios({
+      method: "POST",
+      url: Clover_Base_Url + pars.marchentId + "/" + "orders/" + pars.ordrId+"/line_items",
+      data: mPars,
+      headers: {
+        Accept: "application/json",
+        Authorization: "Bearer 8b78a63f-b7db-51aa-6351-a2f6bc1ebe60",
+      },
+    })
+      .then((res) => {
+        if (res.status == 200) {
+          Toast.show("Product Added successfully")
+          // NavigationService.navigate("Cart")
+          dispatch(getCartProduct(pars))
+        }
+        return res?.data;
+      })
+      .catch((Error) => {
+        console.log("----Error---->", Error);
+        return Error;
+      });
+  }
+);
+
+export const getCartProduct = createAsyncThunk("getCart", async (pars : any) => {
   let mUser_Id = await getUser();
+  console.log("---getCartProduct---->", "3");
+  let mUrl=Clover_Base_Url+pars.marchentId+"/orders/"+pars.ordrId+"/line_items?expand=taxRates"
+  // https://sandbox.dev.clover.com/v3/merchants/05M56WAC9C491/orders/NKWC1ZKX26ETY/line_items?expand=taxRates
   return await axios({
     method: "GET",
-    url: Base_Url + GetCartProduct_Url + mUser_Id,
+    url: mUrl,
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer 8b78a63f-b7db-51aa-6351-a2f6bc1ebe60",
+    },
   })
     .then((res: any) => {
+      console.log("----res?.data---->", res?.data);
       return res?.data;
     })
     .catch((Error) => {
@@ -52,7 +101,7 @@ export const decreaseProductQuantitry = createAsyncThunk(
       data: pars,
     })
       .then((res: any) => {
-        dispatch(getCartProduct());
+        // dispatch(getCartProduct());
         return res.data;
       })
       .catch((Error) => {
@@ -66,7 +115,7 @@ export const deleteProductFromCart = createAsyncThunk(
   async (ID: any, { dispatch }) => {
     let mUser_Id = await getUser();
     let formData = new FormData();
-    formData.append("product_id",ID );
+    formData.append("product_id", ID);
     formData.append("user_id", mUser_Id);
 
     return await axios({
@@ -75,7 +124,7 @@ export const deleteProductFromCart = createAsyncThunk(
       data: formData,
     })
       .then((res: any) => {
-        dispatch(getCartProduct())
+        // dispatch(getCartProduct());
         return res?.data;
       })
       .catch((Error) => {
@@ -87,11 +136,13 @@ export const deleteProductFromCart = createAsyncThunk(
 export interface cart {
   loader?: boolean;
   cartData?: [] | any;
+  orderId?:number|undefined;
 }
 
 const initialState: cart = {
   loader: false,
   cartData: [],
+  orderId:undefined
 };
 
 const CartSlice = createSlice({
@@ -104,10 +155,11 @@ const CartSlice = createSlice({
     },
     [addCartProduct.fulfilled.type]: (state, action) => {
       state.loader = false;
+      state.orderId= action.payload;
       Toast.show(action.payload.messages);
-      if (action.payload.status === "Success") {
-        NavigationService.navigate("Cart");
-      }
+      // if (action.payload.status === "Success") {
+      //   NavigationService.navigate("Cart");
+      // }
     },
     [addCartProduct.rejected.type]: (state, action) => {
       state.loader = false;
@@ -135,15 +187,15 @@ const CartSlice = createSlice({
     [decreaseProductQuantitry.rejected.type]: (state, action) => {
       state.loader = false;
     },
-    [deleteProductFromCart.pending.type]:(state, action)=>{
-      state.loader = true
+    [deleteProductFromCart.pending.type]: (state, action) => {
+      state.loader = true;
     },
-    [deleteProductFromCart.fulfilled.type]:(state, action)=>{
-      state.loader = false
+    [deleteProductFromCart.fulfilled.type]: (state, action) => {
+      state.loader = false;
     },
-    [deleteProductFromCart.rejected.type]:(state, action)=>{
-      state.loader = false
-    }
+    [deleteProductFromCart.rejected.type]: (state, action) => {
+      state.loader = false;
+    },
   },
 });
 

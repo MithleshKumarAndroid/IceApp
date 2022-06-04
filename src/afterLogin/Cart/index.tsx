@@ -21,33 +21,12 @@ import { RootState } from "../../redux/Store";
 import ProgressBar from "../../utily/ProgressBar";
 import { Image_Base_Url_Product } from "../../Service/Api";
 import { getUser } from "../../utily/Helper";
+import * as Storage from "../../utily/Storage";
 
-const DATA = [
-  {
-    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-    title: "First Item",
-  },
-  {
-    id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-    title: "Second Item",
-  },
-  {
-    id: "58694a0f-3da1-471f-bd96-145571e29d72",
-    title: "Third Item",
-  },
-  {
-    id: "58694a0f-3da1-471f-bd96-145571e29d71",
-    title: "Fourth Item",
-  },
-  {
-    id: "58694a0f-3da1-471f-bd96-145571e29d70",
-    title: "Fifth Item",
-  },
-];
 
 const Cart = () => {
   const disspatch = useDispatch<any>();
-  const { loader, cartData } = useSelector(
+  const { loader, cartData, orderId } = useSelector(
     (state: RootState) => state.CartSlice
   );
   const navigation = useNavigation();
@@ -58,7 +37,8 @@ const Cart = () => {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
-      disspatch(getCartProduct());
+
+      // disspatch(getCartProduct());
     });
     return unsubscribe;
   }, [navigation]);
@@ -181,7 +161,7 @@ const Cart = () => {
               deleteItem(v);
             })
           }
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item : any) => item.id}
         />
       </View>
       {listData.length >0 && 

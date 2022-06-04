@@ -6,8 +6,10 @@ import {
   searchFranchaising_Url,
   Franchaising_Category,
   Franchaising_Category_Product_Url,
+  Clover_Base_Url,
 } from "../../Service/Api";
 import Toast from "react-native-simple-toast";
+import * as Storage from "../../utily/Storage";
 
 export const getSearchFranchies = createAsyncThunk(
   "Search",
@@ -31,12 +33,17 @@ export const getFranchiesCategory = createAsyncThunk(
   async (ID: any) => {
     return await axios({
       method: "GET",
-      url: Base_Url + Franchaising_Category + ID,
+      url: Clover_Base_Url + ID + "/" + "categories",
+      headers: {
+        Accept: "application/json",
+        Authorization: "Bearer 8b78a63f-b7db-51aa-6351-a2f6bc1ebe60",
+      },
     })
       .then((res) => {
         return res?.data;
       })
       .catch((Error) => {
+        console.log("-getFranchiesCategory----Error--->", Error);
         return Error;
       });
   }
@@ -45,16 +52,29 @@ export const getFranchiesCategory = createAsyncThunk(
 export const getFranchiesCategoryProduct = createAsyncThunk(
   "Product",
   async (pars: any) => {
+    let mURL =
+      Clover_Base_Url +
+      pars.marchantId +
+      "/" +
+      "categories/" +
+      pars.catId +
+      "/items";
+
+      console.log("---mURL------>", mURL);
+      // https://sandbox.dev.clover.com/v3/merchants/05M56WAC9C491/categories/VRV6CAK2YC7H8/items
+      // https://sandbox.dev.clover.com/v3/merchants/05M56WAC9C491/categories/1Q3784HGHDN9R/items?expand=categories
+
     return await axios({
       method: "GET",
-      url:
-        Base_Url +
-        Franchaising_Category_Product_Url +
-        pars.franchId +
-        "/" +
-        pars.catId,
+      url: mURL,
+      headers: {
+        Accept: "application/json",
+        Authorization: "Bearer 8b78a63f-b7db-51aa-6351-a2f6bc1ebe60",
+      },
     })
       .then((res) => {
+
+        console.log("-getFranchiesCategoryProduct---res?.data---->", res?.data.elements);
         return res?.data;
       })
       .catch((Error) => {
@@ -101,7 +121,7 @@ const SearchSlice = createSlice({
     },
     [getFranchiesCategory.fulfilled.type]: (state, action) => {
       state.loader = false;
-      state.category = action?.payload;
+      state.category = action?.payload?.elements;
     },
     [getFranchiesCategory.rejected.type]: (state, action) => {
       state.loader = false;
@@ -111,7 +131,8 @@ const SearchSlice = createSlice({
     },
     [getFranchiesCategoryProduct.fulfilled.type]: (state, action) => {
       state.loader = false;
-      state.product = action.payload;
+      state.product = action.payload?.elements;
+      // console.log("---action.payload?.elements---->",action.payload?.elements );
     },
     [getFranchiesCategoryProduct.rejected.type]: (state, action) => {
       state.loader = true;
