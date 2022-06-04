@@ -21,6 +21,9 @@ const App = () => {
     }, 100);
   }, []);
 
+
+
+
   return (
     <SafeAreaView>
         <Provider store={Store}>

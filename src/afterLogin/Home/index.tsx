@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Image } from "react-native";
 import { scale } from "react-native-size-matters";
 import MenuHeader from "../../Component/MenuHeader";
@@ -21,6 +21,7 @@ import Profile from "../Profile";
 import Search from "../Search";
 
 const Home = () => {
+
   return (
     <>
       {/* <MenuHeader /> */}
